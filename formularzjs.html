@@ -1,0 +1,246 @@
+<html lang="en">
+
+<head>
+    <title>Formularz</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            padding: 30px;
+
+        }
+
+        th,
+        td {
+            padding: 5px;
+            text-align: center;
+            height: 35px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <form name="form1">
+        Imię:
+        <br>
+        <input id="name" type="text" name="imię">
+        <br> Nazwisko:
+        <br>
+        <input id="surname" type="text" name="nazwisko">
+        <br> Wiek:
+        <br>
+        <input id="age" type="number" name="wiek" min="0" max="150" step="1">
+        <br>Płeć
+        <br>
+
+        <select id="sex" name="Płeć">
+            <option>Mężczyzna</option>
+            <option>Kobieta</option>
+
+        </select>
+
+    </form>
+    <button id="savebutton" type="button" value="Save" name="wyslij"> Save </button>
+    <button id="cancel" type="button" value="Cancel" name="wyslij"> Cancel </button>
+    <br>
+    <br>
+
+    <table id="tabela" border="1px">
+        <thead>
+            <th width="100px">Lp.</th>
+            <th width="100px">Imię</th>
+            <th width="100px">Nazwisko</th>
+            <th width="100px">Wiek</th>
+            <th width="100px">Płeć</th>
+            <th width="100px">Usuwanie</th>
+            <th width="100px">Edycja</th>
+        </thead>
+        <tbody id="clientstable">
+
+        </tbody>
+
+    </table>
+
+</body>
+
+<script>
+    document.getElementById("savebutton").onclick = save;
+    document.getElementById("cancel").onclick = cancel;
+
+    //    document.getElementById("savebutton").addEventListener("click",add);
+
+    var clients = [];
+    var id = 0;
+    var editing = false;
+    var editingId = null;
+
+    var table = document.getElementById("clientstable");
+    var name = document.getElementById("name").value;
+    var surname = document.getElementById("surname").value;
+    var age = document.getElementById("age").value;
+    var sex = document.getElementById("sex").value;
+
+    function cancel() {
+        editing = false;
+
+        document.getElementById("name").value = "";
+        document.getElementById("surname").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("sex").value = "";
+    }
+
+    function save() {
+        if (editing == false) {
+            add();
+        }
+        else {
+            edition();
+        }
+    }
+
+    function add() {
+        var table = document.getElementById("clientstable");
+        var name = document.getElementById("name").value;
+        var surname = document.getElementById("surname").value;
+        var age = document.getElementById("age").value;
+        var sex = document.getElementById("sex").value;
+
+        var newCustomer = {
+            id: id,
+            name: document.getElementById("name").value,
+            surname: document.getElementById("surname").value,
+            age: document.getElementById("age").value,
+            sex: document.getElementById("sex").value
+        }
+
+        clients.push(newCustomer);
+        var row = document.createElement("tr");
+        var td0 = document.createElement("td");
+        td0.setAttribute("id", "Lp");
+
+        var td1 = document.createElement("td");
+        td1.setAttribute("id", "name" + id);
+
+        var td2 = document.createElement("td");
+        td2.setAttribute("id", "surname" + id);
+
+        var td3 = document.createElement("td");
+        td3.setAttribute("id", "age" + id);
+
+        var td4 = document.createElement("td");
+        td4.setAttribute("id", "sex" + id);
+
+        var td5 = document.createElement("td");
+        var td6 = document.createElement("td");
+
+        var buttonerase = document.createElement("button");
+        var buttonedit = document.createElement("button");
+
+        buttonerase.innerText = "Delete";
+        buttonerase.setAttribute("id", id);
+        buttonerase.onclick = erase;
+
+        buttonedit.innerText = "Edit";
+        buttonedit.setAttribute("id", id);
+        buttonedit.onclick = edit;
+
+        var txtNode0 = document.createTextNode(id + 1);
+        td0.appendChild(txtNode0);
+        row.appendChild(td0);
+
+        var txtNode1 = document.createTextNode(name);
+        td1.appendChild(txtNode1);
+        row.appendChild(td1);
+
+        var txtNode2 = document.createTextNode(surname);
+        td2.appendChild(txtNode2);
+        row.appendChild(td2);
+
+        var txtNode3 = document.createTextNode(age);
+        td3.appendChild(txtNode3);
+        row.appendChild(td3);
+
+
+        var txtNode4 = document.createTextNode(sex);
+        td4.appendChild(txtNode4);
+        row.appendChild(td4);
+
+        td5.appendChild(buttonerase);
+        row.appendChild(td5);
+
+        td6.appendChild(buttonedit);
+        row.appendChild(td6);
+
+        tabela.appendChild(row);
+        id++;
+    }
+
+    function edition() {
+        var tName = document.getElementById("name").value;
+        var tSurname = document.getElementById("surname").value;
+        var tAge = document.getElementById("age").value;
+        var tSex = document.getElementById("sex").value;
+
+        var htmlName = document.getElementById("name" + editingId);
+        var htmlSurname = document.getElementById("surname" + editingId);
+        var htmlAge = document.getElementById("age" + editingId);
+        var htmlSex = document.getElementById("sex" + editingId);
+
+        htmlName.innerText = tName;
+        htmlSurname.innerText = tSurname;
+        htmlAge.innerText = tAge;
+        htmlSex.innerText = tSex;
+
+        var index = clients.map(function(e) { return e.id; }).indexOf(editingId);
+
+        clients[index].name = tName;
+        clients[index].surname = tSurname;
+        clients[index].age = tAge;
+        clients[index].sex = tSex;
+
+        editing = false;
+    }
+
+    function erase(event) {
+        event.target.parentElement.parentElement.remove();
+
+
+
+        // delete clients[event.target.id];
+        clients.splice(event.target.id, 1);
+    }
+
+    function edit(event) {
+        editing = true;
+
+        var name = document.getElementById("name");
+        var surname = document.getElementById("surname");
+        var age = document.getElementById("age");
+        var sex = document.getElementById("sex");
+        
+
+        var tempClient = getByValue(clients, event.target.id);
+        var tName = tempClient.name;
+        var tSurname = tempClient.surname;
+        var tAge = tempClient.age
+        var tSex = tempClient.sex;
+        editingId = tempClient.id;
+
+        name.value = tName;
+        surname.value = tSurname;
+        age.value = tAge;
+        sex.value = tSex;
+        
+    }
+
+    function getByValue(arr, value) {
+
+        for (var i = 0, iLen = arr.length; i < iLen; i++) {
+
+            if (arr[i].id == value) return arr[i];
+        }
+    }
+</script>

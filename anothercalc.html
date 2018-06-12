@@ -1,0 +1,294 @@
+<html lang="en">
+
+<head>
+    <title>Kalkulator</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+
+        var window = document.getElementById("window");
+        var temp1;
+        var temp2;
+        var operation;
+        var eq;
+        var newvar;
+
+        function func(x) {
+            var window = document.getElementById("window");
+            if (window.innerText == "0") {
+                window.innerText = x;
+                newvar = false;
+            }
+            else if (newvar == true) {
+                window.innerText = x;
+                newvar = false;
+            }
+            else {
+                var temp = window.innerText + x;
+                window.innerText = temp;
+            }
+        }
+
+        function backspace() {
+            if (newvar == false) {
+                var window = document.getElementById("window");
+                var temp = window.innerText;
+                var templength = temp.length;
+                temp = temp.slice(0, templength - 1);
+                window.innerText = temp;
+                if (window.innerText == "") {
+                    window.innerText = "0"
+                }
+            }
+        }
+
+        function C() {
+            var window = document.getElementById("window");
+            window.innerText = "0";
+            temp1 = "";
+            temp2 = "";
+            eq = "";
+            operation = "";
+            var history = document.getElementById("history");
+            var display = "";
+            history.innerText = display;
+            newvar = false;
+
+        }
+
+        function CE() {
+            var window = document.getElementById("window");
+            window.innerText = "0";
+            newvar = false;
+        }
+
+        function coma() {
+            var window = document.getElementById("window");
+            var temp = window.innerText;
+            var comaexists = temp.indexOf(",");
+            if (comaexists == -1) {
+                temp = temp + ","
+                window.innerText = temp;
+            }
+        }
+
+        function op(x) {
+            var window = document.getElementById("window");
+            temp1 = window.innerText;
+            operation = x;
+            newvar = true;
+        }
+
+
+        function equal(operation) {
+            newvar = false;
+            switch (operation) {
+                case 1:
+
+                    var window = document.getElementById("window");
+                    temp2 = window.innerText;
+                    temp1 = temp1.replace(",", ".");
+                    temp2 = temp2.replace(",", ".");
+                    var eq = parseFloat(temp1) + parseFloat(temp2);
+                    temp1 = temp1.toString();
+                    temp1 = temp1.replace(".", ",");
+                    temp2 = temp2.toString();
+                    temp2 = temp2.replace(".", ",");
+                    eq = eq.toString();
+                    eq = eq.replace(".", ",")
+                    window.innerText = eq;
+                    var history = document.getElementById("history");
+                    var display = temp1 + " + " + temp2 + " = " + eq;
+                    history.innerText = display;
+                    newvar = true;
+                    break;
+
+
+                case 2:
+
+                    var window = document.getElementById("window");
+                    temp2 = window.innerText;
+                    temp1 = temp1.replace(",", ".");
+                    temp2 = temp2.replace(",", ".");
+                    var eq = parseFloat(temp1) - parseFloat(temp2);
+                    temp1 = temp1.toString();
+                    temp1 = temp1.replace(".", ",");
+                    temp2 = temp2.toString();
+                    temp2 = temp2.replace(".", ",");
+                    eq = eq.toString();
+                    eq = eq.replace(".", ",")
+                    window.innerText = eq;
+                    var history = document.getElementById("history");
+                    var display = temp1 + " - " + temp2 + " = " + eq;
+                    history.innerText = display;
+                    newvar = true;
+                    break;
+
+                case 3:
+
+                    var window = document.getElementById("window");
+                    temp2 = window.innerText;
+                    temp1 = temp1.replace(",", ".");
+                    temp2 = temp2.replace(",", ".");
+                    var eq = parseFloat(temp1) * parseFloat(temp2);
+                    temp1 = temp1.toString();
+                    temp1 = temp1.replace(".", ",");
+                    temp2 = temp2.toString();
+                    temp2 = temp2.replace(".", ",");
+                    eq = eq.toString();
+                    eq = eq.replace(".", ",")
+                    window.innerText = eq;
+                    var history = document.getElementById("history");
+                    var display = temp1 + " x " + temp2 + " = " + eq;
+                    history.innerText = display;
+                    newvar = true;
+                    break;
+
+                case 4:
+
+                    var window = document.getElementById("window");
+                    temp2 = window.innerText;
+                    temp1 = temp1.replace(",", ".");
+                    temp2 = temp2.replace(",", ".");
+                    eq = parseFloat(temp1) / parseFloat(temp2);
+                    temp1 = temp1.toString();
+                    temp1 = temp1.replace(".", ",");
+                    temp2 = temp2.toString();
+                    temp2 = temp2.replace(".", ",");
+                    eq = eq.toString();
+                    eq = eq.replace(".", ",")
+                    window.innerText = eq;
+                    var history = document.getElementById("history");
+                    var display = temp1 + " / " + temp2 + " = " + eq;
+                    history.innerText = display;
+                    newvar = true;
+                    break;
+
+
+            }
+        }
+        function power() {
+            var window = document.getElementById("window");
+            temp1 = window.innerText;
+            temp1 = temp1.replace(",", ".");
+            eq = parseFloat(temp1) * parseFloat(temp1);
+            temp1 = temp1.toString();
+            temp1 = temp1.replace(".", ",");
+            eq = eq.toString();
+            eq = eq.replace(".", ",")
+            window.innerText = eq;
+            var history = document.getElementById("history");
+            var display = temp1 + " x " + temp1 + " = " + eq;
+            history.innerHTML = display;
+            newvar = true;
+        }
+
+
+
+
+
+
+
+    </script>
+
+</head>
+<h1 id="window">0</h1>
+
+<body>
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="procent()" id="procent" type="button" class="btn" Style="width: 100%;">%</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="sqr()" id="sqr" type="button" class="btn" Style="width: 100%;">&#8730;</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="power()" id="power" type="button" class="btn" Style="width: 100%;">x
+                <sup>2</sup>
+            </button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="flip()" id="flip" type="button" class="btn" Style="width: 100%;">
+                <sup>1</sup>/
+                <sub>x</sub>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="CE()" id="CE" type="button" class="btn" Style="width: 100%;">CE</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="C()" id="C" type="button" class="btn" Style="width: 100%;">C</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="backspace()" id="backspace" type="button" class="btn" Style="width: 100%;">Backspace</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="op(4)" id="div" type="button" class="btn" Style="width: 100%;">/</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(7)" id="seven" type="button" class="btn btn-default" Style="width: 100%;">7</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(8)" id="eight" type="button" class="btn btn-default" Style="width: 100%;">8</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(9)" id="nine" type="button" class="btn btn-default" Style="width: 100%;">9</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="op(3)" id="mul" type="button" class="btn" Style="width: 100%;">x</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(4)" id="four" type="button" class="btn btn-default" Style="width: 100%;">4</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(5)" id="five" type="button" class="btn btn-default" Style="width: 100%;">5</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(6)" id="six" type="button" class="btn btn-default" Style="width: 100%;">6</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="op(2)" id="minus" type="button" class="btn" Style="width: 100%;">-</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(1)" id="one" type="button" class="btn btn-default" Style="width: 100%;">1</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(2)" id="two" type="button" class="btn btn-default" Style="width: 100%;">2</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(3)" id="three" type="button" class="btn btn-default" Style="width: 100%;">3</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="op(1)" id="plus" type="button" class="btn" Style="width: 100%;">+</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="plusmin()" id="plusmin" type="button" class="btn" Style="width: 100%;">&plusmn;</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="func(0)" id="zero" type="button" class="btn btn-default" Style="width: 100%;">0</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="coma()" id="coma" type="button" class="btn" Style="width: 100%;">,</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " align="center" ;>
+            <button onclick="equal(operation)" id="equal" type="button" class="btn" Style="width: 100%;">=</button>
+        </div>
+    </div>
+
+    <h6 id="history"></h6>
+
+</body>
+
+</html>
